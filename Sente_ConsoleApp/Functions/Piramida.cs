@@ -10,6 +10,13 @@ namespace Sente_ConsoleApp.Functions
 {
     public static class Piramida
     {
+        /// <summary>
+        /// Główna metoda rozpoczynająca odczyt pliku piramida.xml
+        /// </summary>
+        /// <param name="xmlfile_path"></param>
+        /// <returns>
+        /// zwraca pełną piramidę uczestników
+        /// </returns>
         public static List<Uczestnik_Model> Process_Piramida(string xmlfile_path)
         {
             var xmlfile = XElement.Load(xmlfile_path);
@@ -17,6 +24,12 @@ namespace Sente_ConsoleApp.Functions
             return Get_Lista_Uczestnikow(xmlfile).OrderBy(o => o.Id).ToList();
         }
 
+        /// <summary>
+        /// Rozpoczęcie procesowania pliku xml
+        /// Stworzenie listy do zwrócenia a następnie generowanie uczestników
+        /// </summary>
+        /// <param name="xmlfile"></param>
+        /// <returns></returns>
         public static List<Uczestnik_Model> Get_Lista_Uczestnikow(XElement xmlfile)
         {
             var piramida = new List<Uczestnik_Model>();
@@ -45,6 +58,13 @@ namespace Sente_ConsoleApp.Functions
             return piramida;
         }
 
+        /// <summary>
+        /// generowanie uczestników których są podwładnymi przynajmniej jednego uczestnika
+        /// </summary>
+        /// <param name="uczestnik_element"></param>
+        /// <param name="uczestnik_przelozony"></param>
+        /// <param name="poziom_piramidy"></param>
+        /// <param name="piramida"></param>
         static void Get_Uczestnik(XElement uczestnik_element, Uczestnik_Model uczestnik_przelozony, uint poziom_piramidy, List<Uczestnik_Model> piramida)
         {
             uczestnik_przelozony.List_Podwladni = new List<Uczestnik_Model>();

@@ -10,6 +10,12 @@ namespace Sente_ConsoleApp.Functions
 {
     public static class Przelewy
     {
+        /// <summary>
+        /// Główna funkcja do procesowania pliku xml
+        /// Odczy danych z pliku oraz rozpoczęcie ich przetwarzania
+        /// </summary>
+        /// <param name="xmlfile_path"></param>
+        /// <param name="piramida"></param>
         public static void Process_Przelewy(string xmlfile_path, List<Uczestnik_Model> piramida)
         {
             var xmlfile_przelewy = XElement.Load(xmlfile_path);
@@ -35,6 +41,11 @@ namespace Sente_ConsoleApp.Functions
             }
         }
 
+        /// <summary>
+        /// Odczyt danych do przelewu z pliku xml oraz przełożenie ich na model wykorzystany w późniejszym etapie
+        /// </summary>
+        /// <param name="przelew_raw"></param>
+        /// <returns></returns>
         public static Przelew_Model Get_Przelew(XElement przelew_raw)
         {
             if (!uint.TryParse(przelew_raw.Attribute("od").Value, out uint przelew_od))
@@ -63,6 +74,12 @@ namespace Sente_ConsoleApp.Functions
             };
         }
 
+        /// <summary>
+        /// Generowanie prowizji zaczynając od 1 stopnia piramidy a kończąc na przełożonym uczestnika który wpłacił kwotę
+        /// </summary>
+        /// <param name="pracownik"></param>
+        /// <param name="przelew"></param>
+        /// <returns></returns>
         public static double Generate_Prowizje(Uczestnik_Model pracownik, Przelew_Model przelew)
         {
             var przelozony = pracownik.Przelozony;
