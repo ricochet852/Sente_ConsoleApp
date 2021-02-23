@@ -23,9 +23,19 @@ namespace Sente_ConsoleApp.Functions
             foreach (var uczestnik in xmlfile.Elements("uczestnik"))
             {
                 uint poziom_piramidy = 0;
+                if(!uint.TryParse(uczestnik.Attribute("id").Value, out uint uczestnik_id))
+                {
+                    Console.WriteLine("Błąd podczas odczytu uczestnika!");
+                    Console.WriteLine("Błąd podczas konwersji atrybutu 'id' ");
+                    Console.WriteLine($"Uczestnik : id : { uczestnik.Attribute("id").Value } ");
+                    Console.WriteLine("======================= !!! =======================");
+                    Console.WriteLine();
+                    return null;
+                }
+
                 var uczestnik_add = new Uczestnik_Model
                 {
-                    Id = uint.Parse(uczestnik.Attribute("id").Value),
+                    Id = uczestnik_id,
                     Poziom_Piramidy = poziom_piramidy
                 };
                 Get_Uczestnik(uczestnik, uczestnik_add, poziom_piramidy + 1, piramida);

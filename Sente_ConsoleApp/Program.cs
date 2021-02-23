@@ -13,7 +13,7 @@ namespace Sente_ConsoleApp
         static List<Uczestnik_Model> Piramida = new List<Uczestnik_Model>();
         static void Main(string[] args)
         {
-            Console.WriteLine("Twórca : Patryk Agata!");
+            Console.WriteLine("Twórca : Patryk Agata");
             Console.WriteLine();
 
             if (!File.Exists(file_piramida_nazwa) || !File.Exists(file_przelewy_nazwa))

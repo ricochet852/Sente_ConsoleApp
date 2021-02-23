@@ -17,17 +17,49 @@ namespace Sente_ConsoleApp.Functions
             foreach (var przelew_raw in xmlfile_przelewy.Elements("przelew"))
             {
                 var przelew = Get_Przelew(przelew_raw);
+                if (przelew == null)
+                {
+                    continue;
+                }
                 var pracownik = piramida.Where(x => x.Id == przelew.Od).FirstOrDefault();
+                if (pracownik == null)
+                {
+                    Console.WriteLine("Przelew nie może zostać zrealizowany!");
+                    Console.WriteLine($"Przelew : Od : {przelew.Od}, Kwota : {przelew.Kwota}!");
+                    Console.WriteLine("Brak pracownika o podanym id");
+                    Console.WriteLine("======================= !!! =======================");
+                    Console.WriteLine();
+                    continue;
+                }
                 Generate_Prowizje(pracownik, przelew);
             }
         }
 
-        public static Przelew_Model Get_Przelew(XElement przelew)
+        public static Przelew_Model Get_Przelew(XElement przelew_raw)
         {
+            if (!uint.TryParse(przelew_raw.Attribute("od").Value, out uint przelew_od))
+            {
+                Console.WriteLine("Przelew nie może zostać zrealizowany!");
+                Console.WriteLine("Błąd podczas konwersji atrybutu 'od' ");
+                Console.WriteLine($"Przelew : Od : { przelew_raw.Attribute("od").Value }, Kwota : { przelew_raw.Attribute("kwota").Value } ");
+                Console.WriteLine("======================= !!! =======================");
+                Console.WriteLine();
+                return null;
+            }
+            if (!uint.TryParse(przelew_raw.Attribute("kwota").Value, out uint przelew_kwota))
+            {
+                Console.WriteLine("Przelew nie może zostać zrealizowany!");
+                Console.WriteLine("Błąd podczas konwersji atrybutu 'kwota' ");
+                Console.WriteLine($"Przelew : Od : { przelew_raw.Attribute("od").Value }, Kwota : { przelew_raw.Attribute("kwota").Value } ");
+                Console.WriteLine("======================= !!! =======================");
+                Console.WriteLine();
+                return null;
+            }
+
             return new Przelew_Model
             {
-                Od = uint.Parse(przelew.Attribute("od").Value),
-                Kwota = double.Parse(przelew.Attribute("kwota").Value)
+                Od = przelew_od,
+                Kwota = przelew_kwota
             };
         }
 
