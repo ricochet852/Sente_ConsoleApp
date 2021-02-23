@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
@@ -9,8 +10,6 @@ namespace Sente_ConsoleApp.Functions
 {
     public static class Przelewy
     {
-        #region Przelewy
-
         public static void Process_Przelewy(string xmlfile_path, List<Uczestnik_Model> piramida)
         {
             var xmlfile_przelewy = XElement.Load(xmlfile_path);
@@ -18,8 +17,8 @@ namespace Sente_ConsoleApp.Functions
             foreach (var przelew_raw in xmlfile_przelewy.Elements("przelew"))
             {
                 var przelew = Get_Przelew(przelew_raw);
-                var path = Find_User(przelew.Od, piramida);
-                Generate_Prowizje(path, przelew);
+                var pracownik = piramida.Where(x => x.Id == przelew.Od).FirstOrDefault();
+                Generate_Prowizje(pracownik, przelew);
             }
         }
 
@@ -32,61 +31,27 @@ namespace Sente_ConsoleApp.Functions
             };
         }
 
-        public static void Generate_Prowizje(List<Uczestnik_Model> path, Przelew_Model przelew)
+        public static double Generate_Prowizje(Uczestnik_Model pracownik, Przelew_Model przelew)
         {
-            for (int i = 0; i < path.Count; i++)
+            var przelozony = pracownik.Przelozony;
+            double prowizja = przelew.Kwota;
+            if (przelozony != null)
             {
-                var uczestnik = path[i];
-                if (i == path.Count - 1)
-                {
-                    uczestnik.Prowizja += przelew.Kwota;
-                    return;
-                }
-                double prowizja = Math.Round(przelew.Kwota / 2);
-                uczestnik.Prowizja += prowizja;
-                przelew.Kwota -= prowizja;
+                prowizja = Generate_Prowizje(przelozony, przelew);
             }
-        }
-
-        #endregion
-
-        private static List<Uczestnik_Model> Find_User(uint id, List<Uczestnik_Model> piramida)
-        {
-            var list = new List<Uczestnik_Model>();
-
-            var i = Find_User_ext(piramida, id, list);
-            if (i == null)
+            if (przelew.Od == pracownik.Id)
             {
-                return null;
-            }
-
-            list.Add(i);
-            list.Reverse();
-
-            return list;
-        }
-
-        private static Uczestnik_Model Find_User_ext(List<Uczestnik_Model> uczestnicy, uint id, List<Uczestnik_Model> path)
-        {
-            foreach (var uczestnik in uczestnicy)
-            {
-                if (uczestnik.Id == id)
+                if (pracownik.Poziom_Piramidy == 0)
                 {
-                    return null;
+                    pracownik.Prowizja += prowizja;
+                    return 0;
                 }
-
-                if (uczestnik.List_Podwladni.Count != 0)
-                {
-                    var i = Find_User_ext(uczestnik.List_Podwladni, id, path);
-                    if (i != null)
-                    {
-                        path.Add(i);
-                    }
-                    return uczestnik;
-                }
+                pracownik.Przelozony.Prowizja += prowizja;
+                return 0;
             }
-
-            return null;
+            pracownik.Prowizja += Math.Round(prowizja / 2, 0);
+            prowizja -= Math.Round(prowizja / 2, 0);
+            return prowizja;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Sente_ConsoleApp.Models
         public uint Id { get; set; }
         public uint Poziom_Piramidy { get; set; }
         public double Prowizja { get; set; }
+        public Uczestnik_Model Przelozony { get; set; }
         public List<Uczestnik_Model> List_Podwladni { get; set; }
 
         #region functions

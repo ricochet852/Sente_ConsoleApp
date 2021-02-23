@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Sente_ConsoleApp.Models;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,7 +10,7 @@ namespace Sente_ConsoleApp
     {
         static string file_piramida_nazwa = "piramida.xml";
         static string file_przelewy_nazwa = "przelewy.xml";
-        static List<Models.Uczestnik_Model> Piramida = new List<Models.Uczestnik_Model>();
+        static List<Uczestnik_Model> Piramida = new List<Uczestnik_Model>();
         static void Main(string[] args)
         {
             Console.WriteLine("Twórca : Patryk Agata!");
@@ -22,7 +24,17 @@ namespace Sente_ConsoleApp
             Piramida = Functions.Piramida.Process_Piramida(file_piramida_nazwa);
             Functions.Przelewy.Process_Przelewy(file_przelewy_nazwa, Piramida);
 
+            Generate_Raport(Piramida);
+
             Console.ReadKey();
+        }
+
+        private static void Generate_Raport(List<Uczestnik_Model> piramida)
+        {
+            foreach (var uczestnik in piramida)
+            {
+                Console.WriteLine($"{uczestnik.Id} {uczestnik.Poziom_Piramidy} {uczestnik.Ilosc_Podwladnych_bez_Podwladnych()} {uczestnik.Prowizja}");
+            }
         }
     }
 }
