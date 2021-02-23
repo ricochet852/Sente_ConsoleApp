@@ -6,7 +6,10 @@ namespace Sente_ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Twórca : Patryk Agata!");
+            Console.WriteLine();
+
+
         }
     }
 }
