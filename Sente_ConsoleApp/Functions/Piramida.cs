@@ -7,8 +7,15 @@ using System.Xml.Linq;
 
 namespace Sente_ConsoleApp.Functions
 {
-    public static class XML
+    public static class Piramida
     {
+        public static List<Uczestnik_Model> Process_Piramida(string xmlfile_path)
+        {
+            var xmlfile = XElement.Load(xmlfile_path);
+
+            return Get_Lista_Uczestnikow(xmlfile);
+        }
+
         public static List<Uczestnik_Model> Get_Lista_Uczestnikow(XElement xmlfile)
         {
             var piramida = new List<Uczestnik_Model>();

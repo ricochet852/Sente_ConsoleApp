@@ -16,7 +16,7 @@ namespace Sente_ConsoleApp.Models
 
         public int Ilosc_Podwladnych_bez_Podwladnych()
         {
-            var ilosc = List_Podwladni.Where(x => x.List_Podwladni.Count == 0).Count(0);
+            var ilosc = List_Podwladni.Where(x => x.List_Podwladni.Count == 0).Count();
 
             foreach (var podwladny in List_Podwladni)
             {

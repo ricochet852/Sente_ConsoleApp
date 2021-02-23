@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Sente_ConsoleApp.Models
 {
-    class Przelew_Model
+    public class Przelew_Model
     {
-        public int Od { get; set; }
+        public uint Od { get; set; }
         public double Kwota { get; set; }
     }
 }
