@@ -71,7 +71,6 @@ namespace Sente_ConsoleApp
                 }
                 continue;
             }
-
         }
     }
 }

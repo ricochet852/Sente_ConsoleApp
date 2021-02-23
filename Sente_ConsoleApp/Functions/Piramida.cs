@@ -43,7 +43,7 @@ namespace Sente_ConsoleApp.Functions
                     Console.WriteLine($"Uczestnik : id : { uczestnik.Attribute("id").Value } ");
                     Console.WriteLine("======================= !!! =======================");
                     Console.WriteLine();
-                    return null;
+                    continue;
                 }
 
                 var uczestnik_add = new Uczestnik_Model
@@ -71,9 +71,18 @@ namespace Sente_ConsoleApp.Functions
 
             foreach (var uczestnik in uczestnik_element.Elements("uczestnik"))
             {
+                if(!uint.TryParse(uczestnik.Attribute("id").Value, out uint uczestnik_id))
+                {
+                    Console.WriteLine("Błąd podczas odczytu uczestnika!");
+                    Console.WriteLine("Błąd podczas konwersji atrybutu 'id' ");
+                    Console.WriteLine($"Uczestnik : id : { uczestnik.Attribute("id").Value } ");
+                    Console.WriteLine("======================= !!! =======================");
+                    Console.WriteLine();
+                    continue;
+                }
                 var uczestnik_add = new Uczestnik_Model
                 {
-                    Id = uint.Parse(uczestnik.Attribute("id").Value),
+                    Id = uczestnik_id,
                     Przelozony = uczestnik_przelozony,
                     Poziom_Piramidy = poziom_piramidy
                 };
