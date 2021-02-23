@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Sente_ConsoleApp.Models
 {
-    class Uczestnik_Model
+    public class Uczestnik_Model
     {
-        public int Id { get; set; }
-        public int Poziom_Piramidy { get; set; }
+        public uint Id { get; set; }
+        public uint Poziom_Piramidy { get; set; }
         public double Prowizja { get; set; }
         public List<Uczestnik_Model> List_Podwladni { get; set; }
 
