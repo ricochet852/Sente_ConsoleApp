@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<przelewy>
+  <przelew od="2" kwota="100"/>
+  <przelew od="3" kwota="50"/>
+  <przelew od="4" kwota="100"/>
+  <przelew od="4" kwota="200"/>
+</przelewy>
