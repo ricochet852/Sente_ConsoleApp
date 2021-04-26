@@ -27,7 +27,7 @@ namespace Sente_ConsoleApp
 
         static void Testowe()
         {
-
+            Console.WriteLine("test");
         }
 
         static void Main()
