@@ -25,8 +25,14 @@ namespace Sente_ConsoleApp
 
         #endregion
 
+        static void Testowe()
+        {
+
+        }
+
         static void Main()
         {
+            Testowe();
             Console.WriteLine("Twórca : Patryk Agata");
             Console.WriteLine();
 
